@@ -12,6 +12,7 @@ export default function Home() {
       />
       <div className='w-full flex items-center justify-center'>
         <WarpText />
+
       </div>
 
     </div>
