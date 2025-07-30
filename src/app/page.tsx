@@ -2,6 +2,8 @@
 
 import TargetCursor from "../../components/TargetCursor";
 import WarpText from "../../components/textBlob"
+import Links from "../../components/Links";
+
 export default function Home() {
   return (
     <div className="bg-black  flex flex-col items-center min-w-screen min-h-screen" >
@@ -14,7 +16,7 @@ export default function Home() {
         <WarpText />
 
       </div>
-
+      <Links />
     </div>
 
 
