@@ -9,7 +9,7 @@ export default function TextBlob() {
 }
 
 const WarpText = () => {
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouse = useRef({
     x: undefined,
     y: undefined,
@@ -23,6 +23,10 @@ const WarpText = () => {
     }
 
     const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      return;
+    }
+
     let animationFrameId;
 
     let particles = [];
