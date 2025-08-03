@@ -64,39 +64,39 @@ const WarpText = () => {
       update() {
         if (mouse.current.x === undefined) {
           if (this.x !== this.baseX) {
-            let dxReturn = this.x - this.baseX;
+            const dxReturn = this.x - this.baseX;
             this.x -= dxReturn / 10;
           }
           if (this.y !== this.baseY) {
-            let dyReturn = this.y - this.baseY;
+            const dyReturn = this.y - this.baseY;
             this.y -= dyReturn / 10;
           }
           return;
         }
 
-        let dx = mouse.current.x - this.x;
-        let dy = mouse.current.y - this.y;
-        let distance = Math.sqrt(dx * dx + dy * dy);
+        const dx = mouse.current.x - this.x;
+        const dy = mouse.current.y - this.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
 
-        let forceDirectionX = dx / distance;
-        let forceDirectionY = dy / distance;
+        const forceDirectionX = dx / distance;
+        const forceDirectionY = dy / distance;
 
-        let maxDistance = mouse.current.radius;
-        let force = (maxDistance - distance) / maxDistance;
+        const maxDistance = mouse.current.radius;
+        const force = (maxDistance - distance) / maxDistance;
 
-        let directionX = forceDirectionX * force * this.density;
-        let directionY = forceDirectionY * force * this.density;
+        const directionX = forceDirectionX * force * this.density;
+        const directionY = forceDirectionY * force * this.density;
 
         if (distance < mouse.current.radius) {
           this.x -= directionX;
           this.y -= directionY;
         } else {
           if (this.x !== this.baseX) {
-            let dxReturn = this.x - this.baseX;
+            const dxReturn = this.x - this.baseX;
             this.x -= dxReturn / 10;
           }
           if (this.y !== this.baseY) {
-            let dyReturn = this.y - this.baseY;
+            const dyReturn = this.y - this.baseY;
             this.y -= dyReturn / 10;
           }
         }
