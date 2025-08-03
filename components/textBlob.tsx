@@ -10,7 +10,11 @@ export default function TextBlob() {
 
 const WarpText = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const mouse = useRef({
+  const mouse = useRef<{
+    x: number | undefined;
+    y: number | undefined;
+    radius: number;
+  }>({
     x: undefined,
     y: undefined,
     radius: 100
@@ -27,28 +31,15 @@ const WarpText = () => {
       return;
     }
 
-    let animationFrameId;
-
-    let particles = [];
-    let isInitialized = false;
-
-    const text = "neşet";
-    const font = "bold 120px Inter, sans-serif";
-    const textColor = "#e2e8f0";
-
-    const handleMouseMove = (event) => {
-      const rect = canvas.getBoundingClientRect();
-      mouse.current.x = event.clientX - rect.left;
-      mouse.current.y = event.clientY - rect.top;
-    };
-
-    const handleMouseLeave = () => {
-      mouse.current.x = undefined;
-      mouse.current.y = undefined;
-    };
-
     class Particle {
-      constructor(x, y) {
+      x: number;
+      y: number;
+      size: number;
+      baseX: number;
+      baseY: number;
+      density: number;
+
+      constructor(x: number, y: number) {
         this.x = x;
         this.y = y;
         this.size = 2;
@@ -58,6 +49,7 @@ const WarpText = () => {
       }
 
       draw() {
+        if (!ctx) { return; }
         ctx.fillStyle = textColor;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
@@ -66,7 +58,7 @@ const WarpText = () => {
       }
 
       update() {
-        if (mouse.current.x === undefined) {
+        if (mouse.current.x === undefined || mouse.current.y === undefined) {
           if (this.x !== this.baseX) {
             const dxReturn = this.x - this.baseX;
             this.x -= dxReturn / 10;
@@ -107,7 +99,29 @@ const WarpText = () => {
       }
     }
 
-    const initParticles = (textX, textY) => {
+    let animationFrameId: number;
+
+    let particles: Particle[] = [];
+    let isInitialized = false;
+
+    const text = "neşet";
+    const font = "bold 120px Geist";
+    const textColor = "#e2e8f0";
+
+    const handleMouseMove = (event: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.current.x = event.clientX - rect.left;
+      mouse.current.y = event.clientY - rect.top;
+    };
+
+    const handleMouseLeave = () => {
+      mouse.current.x = undefined;
+      mouse.current.y = undefined;
+    };
+
+
+
+    const initParticles = (textX: number, textY: number) => {
       particles = [];
       ctx.fillText(text, textX, textY);
       const textData = ctx.getImageData(0, 0, canvas.width, canvas.height);
